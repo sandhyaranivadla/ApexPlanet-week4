@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandhyarani Portfolio</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI;
+}
+
+body{
+background:#f4f6fb;
+color:#333;
+transition:0.3s;
+}
+
+/* Dark mode */
+
+.dark{
+background:#121212;
+color:white;
+}
+
+/* Navbar */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#222;
+color:white;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+}
+
+nav ul li{
+margin-left:20px;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+}
+
+/* Hero */
+
+.hero{
+text-align:center;
+padding:80px 20px;
+background:linear-gradient(120deg,#6a11cb,#2575fc);
+color:white;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+/* Section */
+
+.section{
+width:90%;
+max-width:1000px;
+margin:auto;
+padding:40px 0;
+}
+
+.card{
+background:white;
+padding:25px;
+margin-bottom:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.dark .card{
+background:#1e1e1e;
+}
+
+/* Skills */
+
+.skill{
+margin:10px 0;
+}
+
+.bar{
+height:8px;
+background:#ddd;
+border-radius:5px;
+}
+
+.progress{
+height:8px;
+background:#2575fc;
+border-radius:5px;
+}
+
+/* Projects */
+
+.projects{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.project{
+background:#eee;
+padding:20px;
+border-radius:8px;
+}
+
+.dark .project{
+background:#333;
+}
+
+/* Todo */
+
+input,button{
+padding:10px;
+margin:5px;
+}
+
+button{
+background:#2575fc;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:#1b5ed8;
+}
+
+ul{
+margin-top:10px;
+}
+
+/* Contact */
+
+.contact input,.contact textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+}
+
+/* Footer */
+
+footer{
+text-align:center;
+padding:20px;
+background:#222;
+color:white;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+nav{
+flex-direction:column;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<h2>Sandhyarani</h2>
+
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#todo">Todo</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+<button onclick="toggleDark()">Dark Mode</button>
+
+</nav>
+
+<section class="hero">
+<h1>Hello, I'm Sandhyarani</h1>
+<p>Web Development Intern</p>
+</section>
+
+<section id="about" class="section card">
+
+<h2>About Me</h2>
+
+<p>I am passionate about building modern web applications using HTML, CSS and JavaScript. I enjoy learning new technologies and creating responsive and interactive user interfaces.</p>
+
+</section>
+
+<section id="skills" class="section card">
+
+<h2>Skills</h2>
+
+<div class="skill">
+HTML
+<div class="bar"><div class="progress" style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+CSS
+<div class="bar"><div class="progress" style="width:80%"></div></div>
+</div>
+
+<div class="skill">
+JavaScript
+<div class="bar"><div class="progress" style="width:75%"></div></div>
+</div>
+
+</section>
+
+<section id="projects" class="section card">
+
+<h2>Projects</h2>
+
+<div class="projects" id="projectList"></div>
+
+</section>
+
+<section id="todo" class="section card">
+
+<h2>Todo App</h2>
+
+<input type="text" id="taskInput" placeholder="Enter task">
+<button onclick="addTask()">Add Task</button>
+
+<ul id="taskList"></ul>
+
+</section>
+
+<section id="contact" class="section card contact">
+
+<h2>Contact</h2>
+
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<textarea rows="4" placeholder="Message"></textarea>
+
+<button onclick="alert('Message Sent')">Send</button>
+
+</section>
+
+<footer>
+<p>© 2026 Sandhyarani Portfolio</p>
+</footer>
+
+<script>
+
+/* Dark Mode */
+
+function toggleDark(){
+document.body.classList.toggle("dark")
+}
+
+/* Dynamic Projects */
+
+let projects=[
+{name:"Task 1 Website",desc:"Basic webpage using HTML and CSS"},
+{name:"Todo App",desc:"Task manager using JavaScript"},
+{name:"Weather App",desc:"Weather API project"}
+]
+
+let container=document.getElementById("projectList")
+
+projects.forEach(p=>{
+
+let div=document.createElement("div")
+
+div.className="project"
+
+div.innerHTML="<h3>"+p.name+"</h3><p>"+p.desc+"</p>"
+
+container.appendChild(div)
+
+})
+
+/* Todo App with Local Storage */
+
+let tasks=JSON.parse(localStorage.getItem("tasks"))||[]
+
+function showTasks(){
+
+let list=document.getElementById("taskList")
+
+list.innerHTML=""
+
+tasks.forEach((t,i)=>{
+
+let li=document.createElement("li")
+
+li.innerHTML=t+" <button onclick='deleteTask("+i+")'>X</button>"
+
+list.appendChild(li)
+
+})
+
+}
+
+function addTask(){
+
+let input=document.getElementById("taskInput")
+
+tasks.push(input.value)
+
+localStorage.setItem("tasks",JSON.stringify(tasks))
+
+input.value=""
+
+showTasks()
+
+}
+
+function deleteTask(i){
+
+tasks.splice(i,1)
+
+localStorage.setItem("tasks",JSON.stringify(tasks))
+
+showTasks()
+
+}
+
+showTasks()
+
+</script>
+
+</body>
+</html>
